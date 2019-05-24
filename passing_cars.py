@@ -39,7 +39,7 @@ def solution(a):
     passing_cars = 0
     going_west_cars = 0
     n = len(a)
-    for index in range(n-1, -1, -1):
+    for index in range(n - 1, -1, -1):
         if a[index] == 0:
             passing_cars += going_west_cars
             if passing_cars > 1000000000:
@@ -49,4 +49,18 @@ def solution(a):
     return passing_cars
 
 
+def solution2(a):
+    passing_cars = 0
+    going_east_cars = 0
+    for index in range(len(a)):
+        if a[index] == 0:
+            going_east_cars += 1
+        else:
+            passing_cars += going_east_cars
+            if passing_cars > 1000000000:
+                return -1
+    return passing_cars
+
+
 print(solution([0, 1, 0, 1, 1]))
+print(solution2([0, 1, 0, 1, 1]))
