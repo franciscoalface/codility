@@ -1,4 +1,4 @@
-"""
+/*
 A binary gap within a positive integer N is any maximal sequence of consecutive zeros that is surrounded by ones at
 both ends in the binary representation of N.
 For example, number 9 has binary representation 1001 and contains a binary gap of length 2.
@@ -18,44 +18,43 @@ Given N = 32 the function should return 0, because N has binary representation '
 
 Write an efficient algorithm for the following assumptions:
     N is an integer within the range [1..2,147,483,647].'
-"""
+*/
+var assert = require("assert");
 
+function solution(n) {
+  let maxGap = 0;
+  const binary = n.toString(2);
+  let zeroArray = binary.split("1");
+  zeroArray.pop();
 
-def solution(n):
-    count = 0
-    gap = 0
-    binary = format(n, "b")
-    count_ones = 0
+  for (element of zeroArray) {
+    if (element.length > maxGap) {
+      maxGap = element.length;
+    }
+  }
+  return maxGap;
+}
 
-    for char in binary:
-        if char == '1':
-            count_ones += 1
-            if count_ones > 1:
-                count_ones = 1
-                if count > gap:
-                    gap = count
-            count = 0
-        else:
-            count += 1
-    return gap
+function testExecution(number, expected) {
+  try {
+    const result = solution(number);
+    assert.equal(
+      result,
+      expected,
+      `FAILED! For number ${number}: Expected ${expected}, but got ${result}.`
+    );
+  } catch (err) {
+    console.log(err.message);
+  }
+}
 
-
-def run_test(number, expected):
-    result = solution(number)
-    try:
-        assert expected == result
-        print(f'For number {number}, {expected} == {result} - SUCCESS')
-    except AssertionError:
-        print(f'For number {number}, expected {expected}, but got {result} - FAILED')
-
-
-if __name__ == '__main__':
-    run_test(9, 2)
-    run_test(529, 4)
-    run_test(20, 1)
-    run_test(15, 0)
-    run_test(32, 0)
-    run_test(1041, 5)
-    run_test(561892, 3)
-    run_test(74901729, 4)
-    run_test(1376796946, 5)
+testExecution(9, 2);
+testExecution(529, 4);
+testExecution(20, 1);
+testExecution(15, 0);
+testExecution(32, 0);
+testExecution(1041, 5);
+testExecution(561892, 3);
+testExecution(74901729, 4);
+testExecution(74901728, 3);
+testExecution(1376796946, 5);
